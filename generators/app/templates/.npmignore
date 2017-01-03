@@ -1,0 +1,7 @@
+lib
+.*
+*config.json
+*config.js
+yarn.lock
+bower.json
+
