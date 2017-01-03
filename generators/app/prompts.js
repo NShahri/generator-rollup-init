@@ -1,6 +1,22 @@
 var path = require("path");
+const gitc = require('git-config').sync();
 
 module.exports = [
+	{
+        name: 'author',
+        message: 'What\'s your name:',
+		default: (gitc.user || {}).name
+      },
+      {
+        name: 'email',
+        message: 'Your email (optional):',
+		default: (gitc.user || {}).email
+      },
+      {
+        name: 'website',
+        message: 'Your website (optional):'
+      },
+
 	{
 		message: 'What is the project name?',
 		name: 'name',
