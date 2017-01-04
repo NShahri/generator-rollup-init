@@ -90,7 +90,7 @@ module.exports = [
 		name: 'esFile',
 		type: 'input',
 		default (results) {
-			return `dist/${results.name}.es.js`;
+			return `${path.dirname(results.umdFile) || path.dirname(results.commonJsFile) || 'dist'}/${results.name}.es.js`;
 		}
 	}
 ];

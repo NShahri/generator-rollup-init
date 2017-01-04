@@ -3,11 +3,10 @@ var Generator = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var prompts = require('./prompts');
-
+var path = require("path");
 
 module.exports = Generator.extend({
   initializing(){
-    this.composeWith('license', {name: 'My name', email: 'My@email.com', website: 'www.h.com', defaultLicense: 'MIT'});
   },
 
   prompting: function () {
@@ -17,14 +16,21 @@ module.exports = Generator.extend({
     ));
 
     return this.prompt(prompts).then(function (props) {
+      let entry = path.parse(props.entry);
+
       // To access props later use this.props.someAnswer;
-      this.log(props);
+      props.defaultLicense = 'MIT';
       props.description = '';
+      props.entryPath = entry.dir;
+      props.entryTest = path.resolve(entry.dir, entry.name + '.spec' + entry.ext)
       this.props = props;
+      this.composeWith('license', props);
     }.bind(this));
   },
 
   writing: function () {
+    this.log(this.props);
+
     this.fs.copyTpl(
       this.templatePath('*'),
       this.destinationPath(),
@@ -42,9 +48,25 @@ module.exports = Generator.extend({
       this.destinationPath('.vscode/'),
       this.props
     );
+
+    this.fs.copyTpl(
+      this.templatePath('src/index.js'),
+      this.destinationPath(this.props.entry),
+      this.props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('src/index.spec.js'),
+      this.destinationPath(this.props.entryTest),
+      this.props
+    );    
   },
 
   install: function () {
-    this.installDependencies();
+    this.installDependencies({
+      npm: false,
+      bower: false,
+      yarn: true
+    });
   }
 });

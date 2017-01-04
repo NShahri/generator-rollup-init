@@ -1,19 +1,19 @@
 {
-  "name": "react.rt",
-  "description": "React Release/Feature Toggle",
-  "main": "dist/index.umd.js",
+  "name": "<%= name %>",
+  "description": "<%= description %>",
+  "main": "<%= umdFile %>",
   "authors": [
-    "Nima Shahri"
+    "<%= author %>"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/NShahri/React.ReleaseToggle",
+  "homepage": "<%= website %>",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
     "tests",
-    "lib",
+    "<%= entryPath %>",
     ".*",
     "*config.json",
     "*config.js",

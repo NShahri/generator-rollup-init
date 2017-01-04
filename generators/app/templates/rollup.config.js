@@ -8,7 +8,7 @@ import replace from 'rollup-plugin-replace';
 let pkg = require('./package.json');
 
 export default {
-    entry: 'lib/js/index.js',
+    entry: '<%= entry %>',
     plugins: [
         babel({
             babelrc: false,
@@ -26,7 +26,6 @@ export default {
         commonjs({
             ignoreGlobal: true
         }),
-        //globals(),
         replace({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
         nodeResolve({
             jsnext: true,
@@ -37,13 +36,13 @@ export default {
         {
             dest: pkg['main'],
             format: 'umd',
-            moduleName: 'React.RT',
+            moduleName: pkg.name,
             sourceMap: true,
         },
         {
             dest: pkg['jsnext:main'],
             format: 'es',
-            moduleName: 'React.RT',
+            moduleName: pkg.name,
             sourceMap: true
         }
     ]

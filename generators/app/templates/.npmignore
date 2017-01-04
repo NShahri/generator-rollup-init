@@ -1,4 +1,4 @@
-lib
+<%= entryPath %>
 .*
 *config.json
 *config.js
