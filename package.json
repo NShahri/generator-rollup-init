@@ -1,10 +1,10 @@
 {
   "name": "generator-rollup-init",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "generate rollup config and package files which use rollup as bundler",
   "homepage": "https://github.com/NShahri/generator-rollup-init",
   "bugs": "https://github.com/NShahri/generator-rollup-init/issues",
-  "author": { 
+  "author": {
     "name": "Nima Shahri",
     "url": "https://github.com/NShahri"
   },
