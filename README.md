@@ -16,23 +16,16 @@ Then generate your new project:
 yo rollup-init
 ```
 
-## Getting To Know Yeoman
+## TODO
 
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
+- Support adding rollup to exisiting projects
+- Using uglify
+- Testing source map
+- Using flow-bin
+- Bower ?
 
 ## License
 
-MIT © [nima.shahri]()
+MIT © [Nima Shahri](https://github.com/NShahri)
 
 
-[npm-image]: https://badge.fury.io/js/generator-rollup-init.svg
-[npm-url]: https://npmjs.org/package/generator-rollup-init
-[travis-image]: https://travis-ci.org//generator-rollup-init.svg?branch=master
-[travis-url]: https://travis-ci.org//generator-rollup-init
-[daviddm-image]: https://david-dm.org//generator-rollup-init.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org//generator-rollup-init
-[coveralls-image]: https://coveralls.io/repos//generator-rollup-init/badge.svg
-[coveralls-url]: https://coveralls.io/r//generator-rollup-init
