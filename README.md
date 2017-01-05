@@ -1,5 +1,6 @@
-# generator-rollup-init [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
-> rollup init
+# generator-rollup-init
+
+> Generate rollup.config and package files which use rollup as bundler
 
 ## Installation
 
@@ -23,6 +24,7 @@ yo rollup-init
 - Testing source map
 - Using flow-bin
 - Bower ?
+- Using buble!?
 
 ## License
 
