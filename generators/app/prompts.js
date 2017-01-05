@@ -3,20 +3,6 @@ const gitc = require('git-config').sync();
 
 module.exports = [
     {
-        name: 'author',
-        message: 'What\'s your name:',
-        default: (gitc.user || {}).name
-    },
-    {
-        name: 'email',
-        message: 'Your email (optional):',
-        default: (gitc.user || {}).email
-    },
-    {
-        name: 'website',
-        message: 'Your website (optional):'
-    },
-    {
         message: 'What is the project name?',
         name: 'name',
         type: 'input',
@@ -30,60 +16,37 @@ module.exports = [
         default: 'src/index.js'
     },
     {
-        message: 'Generate a UMD build?',
-        help: `Universal Module Definition allows your bundle to run in browsers and in Node.js, and to work with AMD module loaders`,
-        name: 'umd',
-        type: 'confirm',
-        default: true
-    },
-    {
-        when ( results ) {
-            return results.umd === true;
-        },
-        message: `Place to write UMD file`,
-        name: 'umdFile',
-        type: 'input',
-        default (results) {
-            return `dist/${results.name}.umd.js`;
-        }
-    },
-    {
-        when(results){
-            return !results.umd;
-        },
-        message: 'Generate a CommonJS build?',
-        help: `CommonJS allows your bundle to run in Node.js`,
-        name: 'cjs',
-        type: 'confirm',
-        default: true
-    },
-    {
-        when ( results ) {
-            return results.cjs === true;
-        },
-        message: `Place to write CommonJS file`,
-        name: 'commonJsFile',
-        type: 'input',
-        default (results) {
-            return `dist/${results.name}.cjs.js`;
-        }
-    },
-    {
-        message: 'Generate an ES module build?',
-        help: `Creating an ES module build allows your bundle to be easily used by other people using Rollup and other ES module bundlers`,
-        name: 'es',
-        type: 'confirm',
-        default: true
-    },
-    {
-        when ( results ) {
-            return results.es === true;
-        },
         message: `Place to write ES module file`,
         name: 'esFile',
         type: 'input',
         default (results) {
-            return `${path.dirname(results.umdFile) || path.dirname(results.commonJsFile) || 'dist'}/${results.name}.es.js`;
+            return `dist/${results.name}.es.js`;
         }
-    }
+    },
+    {
+        message: 'Additional format generated bundle (optional)?',
+        name: 'format',
+        type: 'list',
+        default: 'umd',
+        choices: [
+            { name: 'umd – Universal Module Definition, works as amd, cjs and iife all in one', value: 'umd', short: 'umd' },
+            { name: 'amd – Asychronous Module Definition, used with module loaders like RequireJS', value: 'amd', short: 'amd' },
+            { name: 'cjs – CommonJS, suitable for Node and Browserify/Webpack', value: 'cjs', short: 'cjs' },
+            { name: 'iife – A self-executing function, suitable for inclusion as a <script> tag', value: 'iife', short: 'iife' },
+            { name: 'only ES', value: '' }
+        ]
+    },
+    {
+        when(results){
+            return results.format;
+        },
+        message(results){
+            return `Place to write ${results.format} module file`;
+        },
+        name: 'bundleFile',
+        type: 'input',
+        default (results) {
+            return `${path.dirname(results.esFile)}/${results.name}.${results.format}.js`;
+        }
+    },
 ];

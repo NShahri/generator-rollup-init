@@ -7,39 +7,29 @@ var path = require('path');
 
 module.exports = Generator.extend({
     prompting: function () {
-        // Have Yeoman greet the user.
         this.log(yosay(
-            'Welcome to the stellar ' + chalk.red('generator-rollup-init') + ' generator!'
+            'Welcome to the ' + chalk.red('generator-rollup-init') + ' generator!'
         ));
 
         return this.prompt(prompts).then(function (props) {
             let entry = path.parse(props.entry);
-            props.defaultLicense = 'MIT';
-            props.description = '';
             props.entryPath = entry.dir;
             props.entryTest = path.resolve(entry.dir, entry.name + '.spec' + entry.ext);
+            props.bundleFile = props.bundleFile || '';
             this.props = props;
-
-            this.composeWith('license', props);
         }.bind(this));
     },
 
     writing: function () {
         this.fs.copyTpl(
-            this.templatePath('*'),
-            this.destinationPath(),
-            this.props
-        );
-
-        this.fs.copyTpl(
             this.templatePath('.*'),
             this.destinationPath(),
             this.props
         );
-
+        
         this.fs.copyTpl(
-            this.templatePath('.vscode/*'),
-            this.destinationPath('.vscode/'),
+            this.templatePath('*'),
+            this.destinationPath(),
             this.props
         );
 

@@ -1,0 +1,6 @@
+/* ONLY For test command */
+/* Mocha Cli configured to use babel and it needs babelrc */
+/* babelrc is false in ROLLUP configs */
+{
+  "presets": ["es2015"]
+}

@@ -33,12 +33,14 @@ export default {
         })
     ],
     targets: [
+        <% if (format) { %>
         {
             dest: pkg['main'],
-            format: 'umd',
+            format: '<%= format %>',
             moduleName: pkg.name,
             sourceMap: true,
         },
+        <% } %>
         {
             dest: pkg['jsnext:main'],
             format: 'es',
