@@ -1,6 +1,6 @@
 # generator-rollup-init
 
-> Generate rollup.config and package files which use rollup as bundler
+> Generate rollup config and package files which use rollup as bundler
 
 ## Installation
 
