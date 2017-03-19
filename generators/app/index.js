@@ -21,17 +21,17 @@ module.exports = Generator.extend({
     },
 
     writing: function () {
-        this.fs.copyTpl(
-            this.templatePath('.*'),
-            this.destinationPath(),
-            this.props
-        );
-        
-        this.fs.copyTpl(
-            this.templatePath('*'),
-            this.destinationPath(),
-            this.props
-        );
+        // this.fs.copyTpl(
+        //     this.templatePath('.*'),
+        //     this.destinationPath(),
+        //     this.props
+        // );
+
+        // this.fs.copyTpl(
+        //     this.templatePath('*'),
+        //     this.destinationPath(),
+        //     this.props
+        // );
 
         this.fs.copyTpl(
             this.templatePath('src/index.js'),
@@ -47,6 +47,26 @@ module.exports = Generator.extend({
     },
 
     install: function () {
+        this.npmInstall([
+            "babel-plugin-external-helpers",
+            "babel-plugin-transform-flow-strip-types",
+            "babel-preset-es2015",
+            "babel-preset-react",
+            "babel-preset-stage-0",
+            "babel-standalone",
+            "chai",
+            "cross-env",
+            "mocha",
+            "npm-run-all",
+            "rollup",
+            "rollup-plugin-babel",
+            "rollup-plugin-commonjs",
+            "rollup-plugin-node-resolve",
+            "rollup-plugin-replace",
+            "rollup-watch"], {
+            'save-dev': true
+        });
+
         this.installDependencies({
             npm: true,
             bower: false,

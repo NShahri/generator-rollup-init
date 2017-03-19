@@ -26,7 +26,6 @@
   "devDependencies": {
     "eslint": "^3.1.1",
     "eslint-config-xo-space": "^0.15.0",
-    "generator-license": "^5.0.0",
     "gulp": "^3.9.0",
     "gulp-coveralls": "^0.1.0",
     "gulp-eslint": "^3.0.1",
