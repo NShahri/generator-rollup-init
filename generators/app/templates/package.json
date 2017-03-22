@@ -1,9 +1,16 @@
 {
   "name": "<%= name %>",
   "main": "<%= bundleFile || esFile %>",
-  "jsnext:main": "<%= esFile %>",
+  "module": "<%= esFile %>",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register <%= entryPath %>/**/*.spec.js",
+    
+    "build:bundle": "cross-env NODE_ENV=production rollup -c rollup.bundle.config.js",
+    "prebuild:bundle": "npm-run-all lint test",
+
+    "build:module": "cross-env NODE_ENV=production rollup -c rollup.module.config.js",
+    "prebuild:module": "npm-run-all lint test",
+
     "build": "cross-env NODE_ENV=production rollup -c",
     "prebuild": "npm-run-all test",
     "watch": "cross-env NODE_ENV=development rollup -c -w",
