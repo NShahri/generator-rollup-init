@@ -11,9 +11,9 @@
     "build:module": "cross-env NODE_ENV=production rollup -c rollup.module.config.js",
     "prebuild:module": "npm-run-all lint test",
 
-    "build": "cross-env NODE_ENV=production rollup -c",
-    "prebuild": "npm-run-all test",
-    "watch": "cross-env NODE_ENV=development rollup -c -w",
-    "start": "npm-run-all --parallel watch"
+    "watch": "cross-env NODE_ENV=production rollup -c -w rollup.module.config.js",
+    "start": "npm-run-all --parallel watch",
+
+    "lint": "cd"
   }
 }

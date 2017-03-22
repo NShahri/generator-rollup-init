@@ -21,11 +21,11 @@ module.exports = Generator.extend({
     },
 
     writing: function () {
-        // this.fs.copyTpl(
-        //     this.templatePath('.*'),
-        //     this.destinationPath(),
-        //     this.props
-        // );
+        this.fs.copyTpl(
+            this.templatePath('.babelrc'),
+            this.destinationPath(),
+            this.props
+        );
 
         this.fs.copyTpl(
             this.templatePath('*'),
@@ -44,6 +44,10 @@ module.exports = Generator.extend({
             this.destinationPath(this.props.entryTest),
             this.props
         );
+    },
+
+    initializing() {
+        this.composeWith(require.resolve('generator-license'), {});
     },
 
     install: function () {
