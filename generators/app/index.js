@@ -4,6 +4,7 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var prompts = require('./prompts');
 var path = require('path');
+const extend = require('deep-extend');
 
 module.exports = Generator.extend({
     prompting: function () {
@@ -20,6 +21,11 @@ module.exports = Generator.extend({
         }.bind(this));
     },
 
+    default() {
+        //this.composeWith(require.resolve('generator-node'), {});
+        this.composeWith(require.resolve('generator-license'), {});
+    },
+    
     writing: function () {
         this.fs.copyTpl(
             this.templatePath('.babelrc'),
@@ -44,10 +50,12 @@ module.exports = Generator.extend({
             this.destinationPath(this.props.entryTest),
             this.props
         );
-    },
 
-    initializing() {
-        this.composeWith(require.resolve('generator-license'), {});
+        const pkg = this.fs.readJSON(this.destinationPath('.package.json'), {});
+        const pkgTemplate = this.fs.readJSON(this.templatePath('package.json'), {});
+        extend(pkg, pkgTemplate);
+        this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+
     },
 
     install: function () {
