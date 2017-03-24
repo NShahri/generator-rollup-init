@@ -23,18 +23,37 @@ module.exports = Generator.extend({
 
     default() {
         //this.composeWith(require.resolve('generator-node'), {});
-        this.composeWith(require.resolve('generator-license'), {});
+        //this.composeWith(require.resolve('generator-license'), {});
+        this.composeWith(require.resolve('generator-node/generators/editorconfig'), {});
+        this.composeWith(require.resolve('generator-node/generators/git'), {});
+        this.composeWith(require.resolve('generator-node/generators/readme'), {});
+        // this.composeWith(require.resolve('generator-license/app'), {
+        //     name: this.props.authorName,
+        //     email: this.props.authorEmail,
+        //     website: this.props.authorUrl
+        // });
+        //     babel: false,
+        //     boilerplate: false,
+        //     travis: false,
+        //     includeCoveralls: false,
+        //     coveralls: false,
+        //     cli: false,
+        //     name: this.props.name,
+        //     projectRoot: this.props.entryPath,
+        //     skipInstall: true,
+        //     //readme: "nima - readme"
+        // })
     },
     
     writing: function () {
-        this.fs.copyTpl(
-            this.templatePath('.babelrc'),
-            this.destinationPath(),
-            this.props
-        );
+        // this.fs.copyTpl(
+        //     this.templatePath('.babelrc'),
+        //     this.destinationPath(),
+        //     this.props
+        // );
 
         this.fs.copyTpl(
-            this.templatePath('*'),
+            this.templatePath('rollup*'),
             this.destinationPath(),
             this.props
         );
@@ -51,31 +70,48 @@ module.exports = Generator.extend({
             this.props
         );
 
-        const pkg = this.fs.readJSON(this.destinationPath('.package.json'), {});
-        const pkgTemplate = this.fs.readJSON(this.templatePath('package.json'), {});
-        extend(pkg, pkgTemplate);
-        this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+        const pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+        let newPkg = extend({
+                name: this.props.name,
+                main: this.props.bundleFile || this.props.esFile,
+                module: this.props.esFile,
+                scripts: {
+                    test: `mocha --compilers js:babel-core/register ${this.props.entryPath}/**/*.spec.js`,
+                    
+                    'build:bundle': 'cross-env NODE_ENV=production rollup -c rollup.bundle.config.js',
+                    'prebuild:bundle': 'npm-run-all lint test',
+
+                    'build:module': 'cross-env NODE_ENV=production rollup -c rollup.module.config.js',
+                    'prebuild:module': 'npm-run-all lint test',
+
+                    watch: 'cross-env NODE_ENV=production rollup -c -w rollup.module.config.js',
+                    start: 'npm-run-all --parallel watch',
+                    
+                    lint: 'cd'
+                }
+        }, pkg);
+        this.fs.writeJSON(this.destinationPath('package.json'), newPkg);
 
     },
 
     install: function () {
         this.npmInstall([
-            "babel-plugin-external-helpers",
-            "babel-plugin-transform-flow-strip-types",
-            "babel-preset-es2015",
-            "babel-preset-react",
-            "babel-preset-stage-0",
-            "babel-standalone",
-            "chai",
-            "cross-env",
-            "mocha",
-            "npm-run-all",
-            "rollup",
-            "rollup-plugin-babel",
-            "rollup-plugin-commonjs",
-            "rollup-plugin-node-resolve",
-            "rollup-plugin-replace",
-            "rollup-watch"], {
+            'babel-plugin-external-helpers',
+            'babel-plugin-transform-flow-strip-types',
+            'babel-preset-es2015',
+            'babel-preset-react',
+            'babel-preset-stage-0',
+            'babel-standalone',
+            'chai',
+            'cross-env',
+            'mocha',
+            'npm-run-all',
+            'rollup',
+            'rollup-plugin-babel',
+            'rollup-plugin-commonjs',
+            'rollup-plugin-node-resolve',
+            'rollup-plugin-replace',
+            'rollup-watch'], {
             'save-dev': true
         });
 
