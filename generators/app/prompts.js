@@ -9,6 +9,29 @@ module.exports = [
         default: process.cwd().split(path.sep).pop()
     },
     {
+        message: 'Author\'s Name?',
+        name: 'authorName',
+        type: 'input',
+        default: gitc.name
+    },
+    {
+        message: 'Author\'s Email?',
+        name: 'authorEmail',
+        type: 'input',
+        default: gitc.email
+    },
+    {
+        message: 'Author\'s Homepage?',
+        name: 'authorUrl',
+        type: 'input'
+    },
+    {
+        message: 'GitHub username or organization?',
+        name: 'githubAccount',
+        type: 'input',
+        default: gitc.user
+    },
+    {
         message: 'Where is the project entry file?',
         help: `Your bundle is generated from the entry file – all its dependencies will be included, along with their dependencies, and so on. The entry file's exports become the bundle's exports.`,
         name: 'entry',
