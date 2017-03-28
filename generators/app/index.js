@@ -23,10 +23,10 @@ module.exports = Generator.extend({
 
     default() {
         //this.composeWith(require.resolve('generator-node'), {});
-        //this.composeWith(require.resolve('generator-license'), {});
-        this.composeWith(require.resolve('generator-node/generators/editorconfig'), {});
-        this.composeWith(require.resolve('generator-node/generators/git'), {});
-        this.composeWith(require.resolve('generator-node/generators/readme'), {});
+        this.composeWith(require.resolve('generator-license'), {name: this.props.name, email: this.props.authorEmail, website: this.props.authorUrl});
+        this.composeWith(require.resolve('generator-node/generators/editorconfig'), this.props);
+        this.composeWith(require.resolve('generator-node/generators/git'), this.props);
+        this.composeWith(require.resolve('generator-node/generators/readme'), this.props);
         // this.composeWith(require.resolve('generator-license/app'), {
         //     name: this.props.authorName,
         //     email: this.props.authorEmail,
@@ -44,7 +44,7 @@ module.exports = Generator.extend({
         //     //readme: "nima - readme"
         // })
     },
-    
+
     writing: function () {
         // this.fs.copyTpl(
         //     this.templatePath('.babelrc'),
@@ -75,9 +75,17 @@ module.exports = Generator.extend({
                 name: this.props.name,
                 main: this.props.bundleFile || this.props.esFile,
                 module: this.props.esFile,
+                version: '0.0.0',
+                description: '',
+                homepage: this.props.homepage,
+                author: {
+                    name: this.props.authorName,
+                    email: this.props.authorEmail,
+                    url: this.props.authorUrl
+                },
                 scripts: {
                     test: `mocha --compilers js:babel-core/register ${this.props.entryPath}/**/*.spec.js`,
-                    
+
                     'build:bundle': 'cross-env NODE_ENV=production rollup -c rollup.bundle.config.js',
                     'prebuild:bundle': 'npm-run-all lint test',
 
@@ -86,7 +94,7 @@ module.exports = Generator.extend({
 
                     watch: 'cross-env NODE_ENV=production rollup -c -w rollup.module.config.js',
                     start: 'npm-run-all --parallel watch',
-                    
+
                     lint: 'cd'
                 }
         }, pkg);

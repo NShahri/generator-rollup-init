@@ -12,13 +12,13 @@ module.exports = [
         message: 'Author\'s Name?',
         name: 'authorName',
         type: 'input',
-        default: gitc.name
+        default: gitc.user.name
     },
     {
         message: 'Author\'s Email?',
         name: 'authorEmail',
         type: 'input',
-        default: gitc.email
+        default: gitc.user.email
     },
     {
         message: 'Author\'s Homepage?',
@@ -29,7 +29,7 @@ module.exports = [
         message: 'GitHub username or organization?',
         name: 'githubAccount',
         type: 'input',
-        default: gitc.user
+        default: gitc.github
     },
     {
         message: 'Where is the project entry file?',
@@ -53,7 +53,7 @@ module.exports = [
         default: 'umd',
         choices: [
             { name: 'umd – Universal Module Definition, works as amd, cjs and iife all in one', value: 'umd', short: 'umd' },
-            { name: 'amd – Asychronous Module Definition, used with module loaders like RequireJS', value: 'amd', short: 'amd' },
+            { name: 'amd – Asynchronous Module Definition, used with module loaders like RequireJS', value: 'amd', short: 'amd' },
             { name: 'cjs – CommonJS, suitable for Node and Browserify/Webpack', value: 'cjs', short: 'cjs' },
             { name: 'iife – A self-executing function, suitable for inclusion as a <script> tag', value: 'iife', short: 'iife' },
             { name: 'only ES', value: '' }
