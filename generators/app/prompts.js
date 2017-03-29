@@ -14,30 +14,30 @@ module.exports = [
         message: 'Author\'s Name?',
         name: 'authorName',
         type: 'input',
-        when: false,
-        default: gitc.user.name || 'no-name'
+        when: !gitc.user || !gitc.user.name,
+        default: gitc.user.name
     },
     {
         message: 'Author\'s Email?',
         name: 'authorEmail',
         type: 'input',
-        when: false,
-        default: gitc.user.email || 'no-email'
+        when: !gitc.user || !gitc.user.email,
+        default: gitc.user.email
     },
     {
         message: 'Author\'s Homepage?',
         name: 'authorUrl',
         type: 'input',
-        when: false,
-        default: `https://github.com/${gitc.user.name || 'github-user'}`
+        when: true,
+        default: gitc.user.name ? `https://github.com/${gitc.user.name}` : undefined
     },
-    {
-        message: 'GitHub username or organization?',
-        name: 'githubAccount',
-        type: 'input',
-        when: false,
-        default: gitc.github ? gitc.github.user : 'github-username'
-    },
+    // {
+    //     message: 'GitHub username or organization?',
+    //     name: 'githubAccount',
+    //     type: 'input',
+    //     when: !gitc.github || !gitc.github.user,
+    //     default: gitc.github ? gitc.github.user : undefined
+    // },
     {
         type: 'list',
         name: 'license',
