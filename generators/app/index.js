@@ -6,52 +6,38 @@ var prompts = require('./prompts');
 var path = require('path');
 const extend = require('deep-extend');
 
-module.exports = Generator.extend({
-    prompting: function () {
+module.exports = class extends Generator {
+    constructor(args, options) {
+        super(args, options);
+    }
+
+    prompting() {
         this.log(yosay(
             'Welcome to the ' + chalk.red('generator-rollup-init') + ' generator!'
         ));
 
+        let options = {};
+        prompts.forEach(p => options[p.name] = p.default);
+
         return this.prompt(prompts).then(function (props) {
             let entry = path.parse(props.entry);
-            props.entryPath = entry.dir;
-            props.entryTest = path.resolve(entry.dir, entry.name + '.spec' + entry.ext);
-            props.bundleFile = props.bundleFile || '';
-            this.props = props;
+
+            this.props = Object.assign({
+                entryPath: entry.dir,
+                entryTest: path.resolve(entry.dir, entry.name + '.spec' + entry.ext),
+                bundleFile: props.bundleFile || ''
+            }, options, props);
         }.bind(this));
-    },
+    }
 
     default() {
-        //this.composeWith(require.resolve('generator-node'), {});
-        this.composeWith(require.resolve('generator-license'), {name: this.props.name, email: this.props.authorEmail, website: this.props.authorUrl});
-        this.composeWith(require.resolve('generator-node/generators/editorconfig'), this.props);
-        this.composeWith(require.resolve('generator-node/generators/git'), this.props);
-        this.composeWith(require.resolve('generator-node/generators/readme'), this.props);
-        // this.composeWith(require.resolve('generator-license/app'), {
-        //     name: this.props.authorName,
-        //     email: this.props.authorEmail,
-        //     website: this.props.authorUrl
-        // });
-        //     babel: false,
-        //     boilerplate: false,
-        //     travis: false,
-        //     includeCoveralls: false,
-        //     coveralls: false,
-        //     cli: false,
-        //     name: this.props.name,
-        //     projectRoot: this.props.entryPath,
-        //     skipInstall: true,
-        //     //readme: "nima - readme"
-        // })
-    },
+        this.composeWith(require.resolve('generator-license'), {name: this.props.authorName, email: this.props.authorEmail, website: this.props.authorUrl, license: this.props.license});
+        this.composeWith(require.resolve('../editorconfig'));
+        this.composeWith(require.resolve('../git'), this.props);
+        this.composeWith(require.resolve('../readme'), this.props);
+    }
 
-    writing: function () {
-        // this.fs.copyTpl(
-        //     this.templatePath('.babelrc'),
-        //     this.destinationPath(),
-        //     this.props
-        // );
-
+    writing() {
         this.fs.copyTpl(
             this.templatePath('rollup*'),
             this.destinationPath(),
@@ -100,9 +86,9 @@ module.exports = Generator.extend({
         }, pkg);
         this.fs.writeJSON(this.destinationPath('package.json'), newPkg);
 
-    },
+    }
 
-    install: function () {
+    install() {
         this.npmInstall([
             'babel-plugin-external-helpers',
             'babel-plugin-transform-flow-strip-types',
@@ -129,4 +115,4 @@ module.exports = Generator.extend({
             yarn: false
         });
     }
-});
+};
