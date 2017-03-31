@@ -36,7 +36,7 @@ module.exports = [
         name: 'license',
         message: 'Which license do you want to use?',
         choices: licenses,
-        when: false,
+        when: true,
         default: 'nolicense'
     },    
     {
