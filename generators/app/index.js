@@ -39,6 +39,18 @@ module.exports = class extends Generator {
 
     writing() {
         this.fs.copyTpl(
+            this.templatePath('.flowconfig'),
+            this.destinationPath('.flowconfig'),
+            this.props
+        );
+        
+        this.fs.copyTpl(
+            this.templatePath('.babelrc'),
+            this.destinationPath('.babelrc'),
+            this.props
+        );
+
+        this.fs.copyTpl(
             this.templatePath('rollup*'),
             this.destinationPath(),
             this.props
@@ -73,15 +85,21 @@ module.exports = class extends Generator {
                     test: `mocha --compilers js:babel-core/register ${this.props.entryPath}/**/*.spec.js`,
 
                     'build:bundle': 'cross-env NODE_ENV=production rollup -c rollup.bundle.config.js',
-                    'prebuild:bundle': 'npm-run-all lint test',
-
+                    'prebuild:bundle': 'npm-run-all lint flow test',
                     'build:module': 'cross-env NODE_ENV=production rollup -c rollup.module.config.js',
-                    'prebuild:module': 'npm-run-all lint test',
+                    'prebuild:module': 'npm-run-all lint flow test',
+                    build: 'npm-run-all build:bundle build:module',
+                    
+                    'watch:module': 'cross-env NODE_ENV=production rollup -c -w rollup.module.config.js',
+                    'watch:bundle': 'cross-env NODE_ENV=production rollup -c -w rollup.bundle.config.js',
+                    watch: 'npm run watch:bundle & npm run watch:module',
 
-                    watch: 'cross-env NODE_ENV=production rollup -c -w rollup.module.config.js',
-                    start: 'npm-run-all --parallel watch',
 
-                    lint: 'cd'
+                    start: 'npm run watch',
+
+                    flow: 'flow',
+
+                    lint: 'eslint lib/js/**/*.{js,jsx}'
                 }
         }, pkg);
         this.fs.writeJSON(this.destinationPath('package.json'), newPkg);
@@ -91,15 +109,19 @@ module.exports = class extends Generator {
     install() {
         this.npmInstall([
             'babel-plugin-external-helpers',
-            'babel-plugin-transform-flow-strip-types',
+            'babel-preset-flow',
             'babel-preset-es2015',
             'babel-preset-react',
             'babel-preset-stage-0',
             'babel-standalone',
+            'flow-bin', 
             'chai',
             'cross-env',
             'mocha',
             'npm-run-all',
+            'eslint',
+            'eslint-plugin-flowtype',
+            'eslint-plugin-react',
             'rollup',
             'rollup-plugin-babel',
             'rollup-plugin-commonjs',
