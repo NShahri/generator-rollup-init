@@ -51,8 +51,8 @@ module.exports = class extends Generator {
         );
 
         this.fs.copyTpl(
-            this.templatePath('rollup*'),
-            this.destinationPath(),
+            this.templatePath('rollup.config.js'),
+            this.destinationPath('rollup.config.js'),
             this.props
         );
 
@@ -84,16 +84,10 @@ module.exports = class extends Generator {
                 scripts: {
                     test: `mocha --compilers js:babel-core/register ${this.props.entryPath}/**/*.spec.js`,
 
-                    'build:bundle': 'cross-env NODE_ENV=production rollup -c rollup.bundle.config.js',
-                    'prebuild:bundle': 'npm-run-all lint flow test',
-                    'build:module': 'cross-env NODE_ENV=production rollup -c rollup.module.config.js',
-                    'prebuild:module': 'npm-run-all lint flow test',
-                    build: 'npm-run-all build:bundle build:module',
+                    build: 'cross-env NODE_ENV=production rollup -c rollup.config.js',
+                    prebuild: 'npm-run-all lint flow test',
                     
-                    'watch:module': 'cross-env NODE_ENV=production rollup -c -w rollup.module.config.js',
-                    'watch:bundle': 'cross-env NODE_ENV=production rollup -c -w rollup.bundle.config.js',
-                    watch: 'npm run watch:bundle & npm run watch:module',
-
+                    watch: 'cross-env NODE_ENV=production rollup -w -c rollup.config.js',
 
                     start: 'npm run watch',
 
@@ -102,8 +96,8 @@ module.exports = class extends Generator {
                     lint: 'eslint lib/js/**/*.{js,jsx}'
                 }
         }, pkg);
-        this.fs.writeJSON(this.destinationPath('package.json'), newPkg);
 
+        this.fs.writeJSON(this.destinationPath('package.json'), newPkg);
     }
 
     install() {
