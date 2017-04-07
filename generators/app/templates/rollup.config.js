@@ -12,23 +12,23 @@ export default {
     external:  Object.keys(pkg.dependencies || {}),
     plugins: [
         babel({
-            babelrc: true,
+            babelrc: false,
             exclude: 'node_modules/**',
             runtimeHelpers: true,
-            // presets: [
-            //   [ 'es2015', { modules: false } ],
-            //   [ 'react' ],
-            //   [ 'stage-0' ]
-            // ],
-            // plugins: [
-            //     'transform-flow-strip-types',
-            //     'external-helpers'
-            // ]
+            presets: [
+              [ 'es2015', { modules: false } ],
+              [ 'react' ],
+              [ 'stage-0' ],
+              [ 'flow' ]
+            ],
+            plugins: [
+                'external-helpers'
+            ]
         }),
         commonjs({
             // namedExports: {
             //     'node_modules/react/react.js': ['PropTypes', 'createElement']
-            // },            
+            // },
             // exclude: ['node_modules/moment/**']
         }),
         //replace({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),

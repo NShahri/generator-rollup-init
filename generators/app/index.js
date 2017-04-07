@@ -39,11 +39,23 @@ module.exports = class extends Generator {
 
     writing() {
         this.fs.copyTpl(
+            this.templatePath('.eslintrc'),
+            this.destinationPath('.eslintrc'),
+            this.props
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('.eslintignore'),
+            this.destinationPath('.eslintignore'),
+            this.props
+        );
+
+        this.fs.copyTpl(
             this.templatePath('.flowconfig'),
             this.destinationPath('.flowconfig'),
             this.props
         );
-        
+
         this.fs.copyTpl(
             this.templatePath('.babelrc'),
             this.destinationPath('.babelrc'),
@@ -86,14 +98,14 @@ module.exports = class extends Generator {
 
                     build: 'cross-env NODE_ENV=production rollup -c rollup.config.js',
                     prebuild: 'npm-run-all lint flow test',
-                    
+
                     watch: 'cross-env NODE_ENV=production rollup -w -c rollup.config.js',
 
                     start: 'npm run watch',
 
                     flow: 'flow',
 
-                    lint: 'eslint lib/js/**/*.{js,jsx}'
+                    lint: 'eslint src/**/*.{js,jsx}'
                 }
         }, pkg);
 
@@ -108,7 +120,8 @@ module.exports = class extends Generator {
             'babel-preset-react',
             'babel-preset-stage-0',
             'babel-standalone',
-            'flow-bin', 
+            'babel-eslint',
+            'flow-bin',
             'chai',
             'cross-env',
             'mocha',
