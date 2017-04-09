@@ -35,27 +35,11 @@ module.exports = class extends Generator {
         this.composeWith(require.resolve('../editorconfig'));
         this.composeWith(require.resolve('../git'), this.props);
         this.composeWith(require.resolve('../readme'), this.props);
+        this.composeWith(require.resolve('../lint'), this.props);
+        this.composeWith(require.resolve('../flow'), this.props);
     }
 
     writing() {
-        this.fs.copyTpl(
-            this.templatePath('.eslintrc'),
-            this.destinationPath('.eslintrc'),
-            this.props
-        );
-
-        this.fs.copyTpl(
-            this.templatePath('.eslintignore'),
-            this.destinationPath('.eslintignore'),
-            this.props
-        );
-
-        this.fs.copyTpl(
-            this.templatePath('.flowconfig'),
-            this.destinationPath('.flowconfig'),
-            this.props
-        );
-
         this.fs.copyTpl(
             this.templatePath('.babelrc'),
             this.destinationPath('.babelrc'),
