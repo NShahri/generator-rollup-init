@@ -19,11 +19,8 @@ yo rollup-init
 
 ## TODO
 
-- Support adding rollup to exisiting projects
 - Using uglify
 - Testing source map
-- Using flow-bin
-- Bower ?
 - Using buble!?
 
 ## License
