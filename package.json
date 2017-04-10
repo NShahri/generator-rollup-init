@@ -1,6 +1,6 @@
 {
   "name": "generator-rollup-init",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "generate rollup config and package files which use rollup as bundler",
   "homepage": "https://github.com/NShahri/generator-rollup-init",
   "bugs": "https://github.com/NShahri/generator-rollup-init/issues",
