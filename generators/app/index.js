@@ -66,31 +66,31 @@ module.exports = class extends Generator {
 
         const pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
         let newPkg = extend({
-                name: this.props.name,
-                main: this.props.bundleFile || this.props.esFile,
-                module: this.props.esFile,
-                version: '0.0.0',
-                description: '',
-                homepage: this.props.homepage,
-                author: {
-                    name: this.props.authorName,
-                    email: this.props.authorEmail,
-                    url: this.props.authorUrl
-                },
-                scripts: {
-                    test: `mocha --compilers js:babel-core/register ${this.props.entryPath}/**/*.spec.js`,
+            name: this.props.name,
+            main: this.props.bundleFile || this.props.esFile,
+            module: this.props.esFile,
+            version: '0.0.0',
+            description: '',
+            homepage: this.props.homepage,
+            author: {
+                name: this.props.authorName,
+                email: this.props.authorEmail,
+                url: this.props.authorUrl
+            },
+            scripts: {
+                test: `mocha --compilers js:babel-core/register ${this.props.entryPath}/**/*.spec.js`,
 
-                    build: 'cross-env NODE_ENV=production rollup -c rollup.config.js',
-                    prebuild: 'npm-run-all lint flow test',
+                build: 'cross-env NODE_ENV=production rollup -c rollup.config.js',
+                prebuild: 'npm-run-all lint flow test',
 
-                    watch: 'cross-env NODE_ENV=production rollup -w -c rollup.config.js',
+                watch: 'cross-env NODE_ENV=production rollup -w -c rollup.config.js',
 
-                    start: 'npm run watch',
+                start: 'npm run watch',
 
-                    flow: 'flow',
+                flow: 'flow',
 
-                    lint: 'eslint src/**/*.{js,jsx}'
-                }
+                lint: 'eslint src/**/*.{js,jsx}'
+            }
         }, pkg);
 
         this.fs.writeJSON(this.destinationPath('package.json'), newPkg);
@@ -104,15 +104,10 @@ module.exports = class extends Generator {
             'babel-preset-react',
             'babel-preset-stage-0',
             'babel-standalone',
-            'babel-eslint',
-            'flow-bin',
             'chai',
             'cross-env',
             'mocha',
             'npm-run-all',
-            'eslint',
-            'eslint-plugin-flowtype',
-            'eslint-plugin-react',
             'rollup',
             'rollup-plugin-babel',
             'rollup-plugin-commonjs',

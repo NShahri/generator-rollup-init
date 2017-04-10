@@ -8,4 +8,12 @@ module.exports = class extends Generator {
             this.destinationPath('.flowconfig')
         );
     }
+
+    install() {
+        this.npmInstall([
+            'flow-bin'
+        ], {
+            'save-dev': true
+        });
+    }
 };

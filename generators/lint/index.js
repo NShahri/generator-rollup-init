@@ -13,4 +13,15 @@ module.exports = class extends Generator {
             this.destinationPath('.eslintrc')
         );
     }
+
+    install() {
+        this.npmInstall([
+            'babel-eslint',
+            'eslint',
+            'eslint-plugin-flowtype',
+            'eslint-plugin-react',
+        ], {
+            'save-dev': true
+        });
+    }
 };
