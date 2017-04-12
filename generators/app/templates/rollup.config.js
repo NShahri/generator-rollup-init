@@ -3,47 +3,52 @@
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import nodeResolve from 'rollup-plugin-node-resolve';
-import replace from 'rollup-plugin-replace';
+//import replace from 'rollup-plugin-replace';
 
 let pkg = require('./package.json');
 
 export default {
     entry: '<%= entry %>',
+    external:  Object.keys(pkg.dependencies || {}),
     plugins: [
         babel({
             babelrc: false,
             exclude: 'node_modules/**',
+            runtimeHelpers: true,
             presets: [
               [ 'es2015', { modules: false } ],
               [ 'react' ],
-              [ 'stage-0' ]
+              [ 'stage-0' ],
+              [ 'flow' ]
             ],
             plugins: [
-                'transform-flow-strip-types',
                 'external-helpers'
             ]
         }),
         commonjs({
-            ignoreGlobal: true
+            // namedExports: {
+            //     'node_modules/react/react.js': ['PropTypes', 'createElement']
+            // },
+            // exclude: ['node_modules/moment/**']
         }),
-        replace({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
+        //replace({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
         nodeResolve({
+            module: true,
             jsnext: true,
-            main: true
+            main: true,
+            preferBuiltins: false
         })
     ],
     targets: [
-        <% if (format) { %>
+        {
+            dest: pkg['module'],
+            format: 'es',
+            moduleName: pkg.name,
+            sourceMap: true
+        },
         {
             dest: pkg['main'],
             format: '<%= format %>',
-            moduleName: pkg.name,
-            sourceMap: true,
-        },
-        <% } %>
-        {
-            dest: pkg['jsnext:main'],
-            format: 'es',
             moduleName: pkg.name,
             sourceMap: true
         }

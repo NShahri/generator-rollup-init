@@ -1,6 +1,6 @@
 {
   "name": "generator-rollup-init",
-  "version": "0.1.3",
+  "version": "0.2.1",
   "description": "generate rollup config and package files which use rollup as bundler",
   "homepage": "https://github.com/NShahri/generator-rollup-init",
   "bugs": "https://github.com/NShahri/generator-rollup-init/issues",
@@ -19,6 +19,8 @@
   ],
   "dependencies": {
     "chalk": "^1.1.3",
+    "deep-extend": "^0.4.1",
+    "generator-license": "^5.1.0",
     "git-config": "0.0.7",
     "yeoman-generator": "^1.0.0",
     "yosay": "^1.2.1"
@@ -26,7 +28,6 @@
   "devDependencies": {
     "eslint": "^3.1.1",
     "eslint-config-xo-space": "^0.15.0",
-    "generator-license": "^5.0.0",
     "gulp": "^3.9.0",
     "gulp-coveralls": "^0.1.0",
     "gulp-eslint": "^3.0.1",
